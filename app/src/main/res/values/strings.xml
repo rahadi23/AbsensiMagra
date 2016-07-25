@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">STIS OFFICIAL</string>
+    <string name="action_settings">Settings</string>
+    <string name="input_user_name">NIM</string>
+    <string name="input_password">Password</string>
+    <string name="nama_aplikasi">STIS OFFICIAL</string>
+
+    <string name="nomor_dan_password">Nomor Pendaftaran dan Password Salah</string>
+    <string name="server_error">Server Error</string>
+    <string name="no_koneksi">Tidak Terhubung ke Internet</string>
+
+    <string name="nomor_daftar_kosong">NIM Tidak Boleh Kosong</string>
+
+
+    <string name="foto_profil_trans">foto_profil_trans</string>
+
+</resources>

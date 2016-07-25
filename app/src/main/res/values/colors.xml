@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4169E1</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#f6d600</color>
+
+    <color name="input_daftar">#e10055</color>
+    <color name="putih">#ffffff</color>
+    <color name="tulisan">#b73100</color>
+</resources>

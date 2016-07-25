@@ -1,0 +1,404 @@
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollViewBlok1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#a8cf45">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:weightSum="1">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DAFTAR STIS BROADCAST"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium">
+
+
+            <TextView
+                android:id="@+id/textview1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Nomor Pendaftaran"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/putih"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:padding="10dp"
+                android:textColor="@color/colorAccent"
+                android:background="@color/input_daftar"
+                android:id="@+id/input_nomor_daftar" >
+                <requestFocus />
+
+            </EditText>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium">
+
+
+            <TextView
+                android:id="@+id/textview2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Password"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/putih"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:padding="10dp"
+                android:textColor="@color/colorAccent"
+                android:background="@color/input_daftar"
+                android:id="@+id/input_password_daftar">
+            </EditText>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium">
+
+
+            <TextView
+                android:id="@+id/textview4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Nama Lengkap"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/putih"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:padding="10dp"
+                android:textColor="@color/colorAccent"
+                android:background="@color/input_daftar"
+                android:id="@+id/input_nama_lengkap" >
+            </EditText>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium">
+
+
+            <TextView
+                android:id="@+id/textview_no_telp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Nomor Telepon"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/putih"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:padding="10dp"
+                android:textColor="@color/colorAccent"
+                android:background="@color/input_daftar"
+                android:id="@+id/no_telp" >
+
+
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium">
+
+
+            <TextView
+                android:id="@+id/textview_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Email"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/putih"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:padding="10dp"
+                android:textColor="@color/colorAccent"
+                android:background="@color/input_daftar"
+                android:id="@+id/email" >
+
+
+            </EditText>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium">
+
+
+            <TextView
+                android:id="@+id/textview_provinsi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Provinsi"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/putih"
+                android:layout_gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/input_daftar"
+                android:id="@+id/pilih_provinsi"
+                android:textColor="@color/colorAccent"
+                android:ems="10"
+                android:textSize="15dp"
+                 />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_pilih_prov"
+                android:text="Pilih"
+                android:shadowColor="@color/input_daftar"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium">
+
+
+            <TextView
+                android:id="@+id/textview6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Jenis Kelamin"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/putih"
+                android:layout_gravity="center"/>
+
+            <RelativeLayout
+                android:id="@+id/check1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/input_daftar">
+
+                <RadioGroup
+                    android:id="@+id/jenis_kelamin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+
+                    >
+                    <RadioButton
+                        android:id="@+id/laki_laki"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1. Laki-laki" />
+
+                    <RadioButton
+                        android:id="@+id/perempuan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:text="2. Perempuan" />
+                </RadioGroup>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium">
+
+
+            <TextView
+                android:id="@+id/textview8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Alamat Lengkap"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/putih"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:padding="40dp"
+                android:textColor="@color/colorAccent"
+                android:background="@color/input_daftar"
+                android:id="@+id/alamat_lengkap_daftar"
+                android:layout_alignParentBottom="true">
+            </EditText>
+
+        </LinearLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/daftar"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:text="DAFTAR"
+                android:textColor="@color/putih"
+                android:background="@drawable/layout"/>
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

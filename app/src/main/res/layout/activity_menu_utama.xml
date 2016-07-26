@@ -20,8 +20,7 @@
                 android:layout_height="130dp"
                 android:src="@drawable/maba"
                 android:layout_margin="10dp"
-                android:id="@+id/imageButtonDaftarMaba"
-                android:background="@color/colorAccent"/>
+                android:id="@+id/imageButtonDaftarMaba" />
         </android.support.v7.widget.CardView>
         <TextView
             android:layout_width="wrap_content"
@@ -48,8 +47,7 @@
             android:layout_height="130dp"
             android:src="@drawable/scan"
             android:layout_margin="10dp"
-            android:id="@+id/imageButtonScannerAbsensi"
-            android:background="@color/input_daftar"/>
+            android:id="@+id/imageButtonScannerAbsensi" />
         </android.support.v7.widget.CardView>
         <TextView
             android:layout_width="wrap_content"
@@ -77,8 +75,7 @@
                 android:layout_height="130dp"
                 android:src="@drawable/tugas_maba"
                 android:layout_margin="10dp"
-                android:id="@+id/imageButtonAbsensiMaba"
-                android:background="@color/colorPrimary"/>
+                android:id="@+id/imageButtonAbsensiMaba" />
         </android.support.v7.widget.CardView>
         <TextView
             android:layout_width="wrap_content"
@@ -104,16 +101,15 @@
             <ImageButton
                 android:layout_width="130dp"
                 android:layout_height="130dp"
-                android:src="@drawable/statistik"
+                android:src="@drawable/upload_activ"
                 android:layout_margin="10dp"
-                android:id="@+id/imageButtonLainLain"
-                android:background="@color/colorAccent"/>
+                android:id="@+id/imageButtonUpload" />
 
         </android.support.v7.widget.CardView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lain-lain"
+            android:text="Upload Absensi"
             android:layout_below="@+id/card4"
             android:layout_centerHorizontal="true" />
 

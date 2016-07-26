@@ -2,6 +2,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f0f0f0">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kamis, 29 Agustus 2016"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/keterangan_hari"
+        android:textSize="25dp"/>
 
 
     <GridView
@@ -19,6 +27,8 @@
         android:clickable="true"
         android:scrollbars="none"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/keterangan_hari" />
 
 </RelativeLayout>

@@ -33,13 +33,13 @@ public class SessionManager {
         editor.commit();
     }
 
-    public void createScannerSession(){
-        editor.putString("scanner","session");
+    public void createUploadSession(){
+        editor.putString("upload","yes");
         editor.commit();
     }
 
-    public String getScannerSession(){
-        return sharedPreferences.getString("scanner",null);
+    public String getUploadSession(){
+        return sharedPreferences.getString("upload",null);
     }
 
     public void deleteSession (){

@@ -35,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -43,10 +44,16 @@
             android:text="341154"
             android:textSize="10dp"
             />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tandaUpload"
+            />
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
 
         <TextView
             android:layout_width="fill_parent"

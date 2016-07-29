@@ -370,7 +370,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             absensi = new Absensi();
 
-            ArrayList<Absensi> arrayAbsensi = db.selectAllAbsensi();
+            ArrayList<Absensi> arrayAbsensi = db.selectStatusBelumUpload();
             for(int i = 0;i<arrayAbsensi.size();i++){
                 HashMap<String,String> parameter = new HashMap<>();
                 parameter.put(AtributName.getKODE(), AtributName.getUploadAbsensi());
@@ -398,7 +398,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
             if(tangkapError == ("")){
                 if(respon!="0"){
                     Toast.makeText(MenuUtamaActivity.this, "Upload Berhasil", Toast.LENGTH_LONG).show();
-                    sm.createUploadSession();
+//                    sm.createUploadSession();
                 }else{
                     Toast.makeText(MenuUtamaActivity.this, "Data Sudah Ada", Toast.LENGTH_LONG).show();
                 }

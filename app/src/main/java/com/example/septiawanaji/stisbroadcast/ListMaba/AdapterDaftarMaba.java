@@ -52,7 +52,7 @@ public class AdapterDaftarMaba extends ArrayAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         TextView namaMaba,noMaba,statusKehadiran;
-        ImageView fotoMaba;
+        ImageView fotoMaba,tandaUpload;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -64,6 +64,7 @@ public class AdapterDaftarMaba extends ArrayAdapter {
         noMaba = (TextView)itemView.findViewById(R.id.no_maba);
         statusKehadiran = (TextView)itemView.findViewById(R.id.status_kehadiran);
         fotoMaba = (ImageView)itemView.findViewById(R.id.foto_maba);
+        tandaUpload = (ImageView)itemView.findViewById(R.id.tandaUpload);
 
         if(resultp.getNama().length()>15){
             namaMaba.setText(resultp.getNama().substring(0, 15)+"...");
@@ -73,6 +74,12 @@ public class AdapterDaftarMaba extends ArrayAdapter {
 
 
         noMaba.setText(resultp.getNomorPendaftaran());
+        Log.d("Status Adapter "+resultp.getNomorPendaftaran(),db.selectStatusUpload(resultp.getNomorPendaftaran()));
+        if(!db.selectStatusUpload(resultp.getNomorPendaftaran()).equals("Sudah Upload")){
+            tandaUpload.setImageResource(R.drawable.error);
+        }else{
+            tandaUpload.setImageResource(R.drawable.success);
+        }
 
         if(db.selectWaktu(resultp.getNomorPendaftaran(),sdf.format(new Date()))==""){
             statusKehadiran.setText("Blm Hadir");

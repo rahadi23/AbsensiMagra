@@ -175,7 +175,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }else{
             jamKedatangan="";
         }
-        Log.d("Waktunya " + no, jamKedatangan);
+        Log.d("Status Upload " + no, jamKedatangan);
         return jamKedatangan;
     }
 
@@ -215,10 +215,31 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void updateStatusUpload(String no,String tanggal){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
+//        ContentValues values = new ContentValues();
+//
+//        values.put(STATUS_UPLOAD,"Sudah Upload");
+//        db.update(TABEL_ABSENSI_MABA, values, NO + "=" + no + " AND " + TANGGAL + "=" + tanggal, null);
+        db.execSQL("UPDATE " + TABEL_ABSENSI_MABA + " SET " + STATUS_UPLOAD+"='Sudah Upload' WHERE "+NO+"='"+no+"' AND "+TANGGAL+"='"+tanggal+"'" );
 
-        values.put(STATUS_UPLOAD,"Sudah Upload");
-        db.execSQL("UPDATE "+TABEL_ABSENSI_MABA+" SET "+STATUS_UPLOAD+"='Sudah Upload' WHERE "+NO+"='"+no+"' AND "+TANGGAL+"='"+tanggal+"'" );
-        db.update(TABEL_ABSENSI_MABA, values, NO+"="+no+" AND "+TANGGAL+"="+tanggal,null);
+    }
+
+    public ArrayList<Absensi> selectStatusBelumUpload(){
+        ArrayList<Absensi> arrayBelumUpload = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT " + NO + ", " + TANGGAL + ", " + JAM_KEDATANGAN + " FROM " + TABEL_ABSENSI_MABA+" WHERE "+STATUS_UPLOAD+"='Belum Upload'", null);
+
+        Absensi absensi;
+        if(c.moveToFirst()) {
+            do {
+                absensi = new Absensi();
+                absensi.setNomorPendaftaran(c.getString(0));
+                absensi.setTanggal(c.getString(1));
+                absensi.setWaktu(c.getString(2));
+
+
+                arrayBelumUpload.add(absensi);
+            } while (c.moveToNext());
+        }
+        return arrayBelumUpload;
     }
 }

@@ -23,10 +23,10 @@
         </activity>
         <activity android:name=".Scan.HasilScan"></activity>
         <activity android:name=".Scan.DecoderActivity"></activity>
-        <activity android:name=".DownloadDaftarMaba.DownloadMaba"></activity>
         <activity android:name=".Login.LoginActivity"></activity>
         <activity android:name=".MenuUtama.MenuUtamaActivity"></activity>
         <activity android:name=".ListMaba.DaftarMaba"></activity>
+        <receiver android:name=".AlarmManager.UploadOtomatis"></receiver>
     </application>
 
 </manifest>

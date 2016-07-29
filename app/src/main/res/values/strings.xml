@@ -13,5 +13,6 @@
 
 
     <string name="foto_profil_trans">foto_profil_trans</string>
-
+    <string name="data_sudah_upload">Data Absensi Sudah Diupload</string>
+    <string name="data_kosong_absensi">Data Absensi Masih Kosong</string>
 </resources>

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.septiawanaji.stisbroadcast.Database.DatabaseHandler;
 import com.example.septiawanaji.stisbroadcast.ImageLoader.ImageLoader;
@@ -113,7 +114,7 @@ public class AdapterDaftarMaba extends ArrayAdapter {
         dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                Toast.makeText(context, db.selectStatusUpload(resultp.getNomorPendaftaran()), Toast.LENGTH_SHORT).show();
             }
         });
         AlertDialog alertDialog = dialogBuilder.create();

@@ -97,12 +97,12 @@ public class DaftarMaba extends AppCompatActivity {
 
         return tanggal;
     }
-//
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//        Intent i = new Intent(getApplicationContext(),MenuUtamaActivity.class);
-//        startActivity(i);
-//        finish();
-//    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(),MenuUtamaActivity.class);
+        startActivity(i);
+        finish();
+    }
 }

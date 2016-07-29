@@ -19,7 +19,7 @@ import java.util.HashMap;
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int DATABSE_VERSION = 14;
+    private static final int DATABSE_VERSION = 5;
     private static final String DATABASE_NAME = "maba_db";
 
     private static final String TABEL_MABA = "tabel_maba";
@@ -34,6 +34,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TANGGAL = "tanggal";
     private static final String JAM_KEDATANGAN = "jam_kedatangan";
     private static final String ID = "id";
+    private static final String STATUS_UPLOAD = "status_upload";
 
     public DatabaseHandler(Context context){
         super(context, DATABASE_NAME, null, DATABSE_VERSION);
@@ -61,6 +62,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 +ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"
                 +NO+" TEXT,"
                 +TANGGAL+" TEXT,"
+                +STATUS_UPLOAD+" TEXT,"
                 +JAM_KEDATANGAN+" TEXT)";
         db.execSQL(CREATE_ABSENSI_TABLE);
     }
@@ -124,7 +126,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.delete(TABEL_ABSENSI_MABA,null,null);
     }
 
-    public String cekRowSize(){
+    public String cekRowSizeMaba(){
         String kosong="";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c  = db.rawQuery("SELECT " + NAMA + " FROM " + TABEL_MABA , null);
@@ -136,12 +138,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return kosong;
     }
 
-    public void insertAbsensi(String no,String tanggal,String jamKedatangan){
+    public void insertAbsensi(String no,String tanggal,String jamKedatangan,String statusUpload){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NO,no);
         values.put(TANGGAL,tanggal);
         values.put(JAM_KEDATANGAN,jamKedatangan);
+        values.put(STATUS_UPLOAD, statusUpload);
 
         db.insert(TABEL_ABSENSI_MABA, null, values);
         Log.d("Insert Absensi",db.toString());
@@ -162,6 +165,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return jamKedatangan;
     }
 
+    public String selectStatusUpload(String no){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c  = db.rawQuery("SELECT " + STATUS_UPLOAD+ " FROM " + TABEL_ABSENSI_MABA + " WHERE " + NO + "='" + no+"'", null);
+
+        String jamKedatangan="";
+        if(c!=null & c.moveToFirst()){
+            jamKedatangan=c.getString(0);
+        }else{
+            jamKedatangan="";
+        }
+        Log.d("Waktunya " + no, jamKedatangan);
+        return jamKedatangan;
+    }
+
+
+
     public ArrayList<Absensi> selectAllAbsensi(){
         ArrayList<Absensi> arrayAbsensi = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -181,5 +200,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         Log.d("Absensi Array",arrayAbsensi.toString());
         return arrayAbsensi;
+    }
+
+    public String cekRowSizeAbsensi(){
+        String kosong="";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c  = db.rawQuery("SELECT " + NO + " FROM " + TABEL_ABSENSI_MABA , null);
+
+        if(c!=null && c.moveToFirst()){
+            kosong="ada";
+        }
+        return kosong;
+    }
+
+    public void updateStatusUpload(String no,String tanggal){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(STATUS_UPLOAD,"Sudah Upload");
+        db.execSQL("UPDATE "+TABEL_ABSENSI_MABA+" SET "+STATUS_UPLOAD+"='Sudah Upload' WHERE "+NO+"='"+no+"' AND "+TANGGAL+"='"+tanggal+"'" );
+        db.update(TABEL_ABSENSI_MABA, values, NO+"="+no+" AND "+TANGGAL+"="+tanggal,null);
     }
 }

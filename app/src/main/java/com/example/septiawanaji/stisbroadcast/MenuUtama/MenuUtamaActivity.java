@@ -1,5 +1,7 @@
 package com.example.septiawanaji.stisbroadcast.MenuUtama;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.septiawanaji.stisbroadcast.AlarmManager.UploadOtomatis;
 import com.example.septiawanaji.stisbroadcast.Database.DatabaseHandler;
 import com.example.septiawanaji.stisbroadcast.Koneksi.API;
 import com.example.septiawanaji.stisbroadcast.Koneksi.ConvertParameter;
@@ -25,18 +28,15 @@ import com.example.septiawanaji.stisbroadcast.Objek.Maba;
 import com.example.septiawanaji.stisbroadcast.Objek.StaticFinal;
 import com.example.septiawanaji.stisbroadcast.Scan.DecoderActivity;
 import com.example.septiawanaji.stisbroadcast.R;
-import com.example.septiawanaji.stisbroadcast.Scan.HasilScan;
 import com.example.septiawanaji.stisbroadcast.SessionManager.SessionManager;
 import com.example.septiawanaji.stisbroadcast.SplashScreen;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.logging.Handler;
 
 /**
  * Created by Septiawan Aji on 6/28/2016.
@@ -46,6 +46,9 @@ public class MenuUtamaActivity extends AppCompatActivity {
     HashMap<String,String> hm;
     DatabaseHandler db;
     ImageButton daftarMaba,scannerAbsensi,absensiMaba,upload;
+    PendingIntent pendingIntent;
+
+    AlarmManager uploadAlarm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sm= new SessionManager(getApplicationContext());
@@ -60,7 +63,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
         absensiMaba = (ImageButton)findViewById(R.id.imageButtonAbsensiMaba);
         upload = (ImageButton)findViewById(R.id.imageButtonUpload);
 
-        if(db.cekRowSize()==""){
+        if(db.cekRowSizeMaba()==""){
 
             daftarMaba.setBackgroundResource(R.color.input_daftar);
             scannerAbsensi.setImageResource(R.drawable.scan_black);
@@ -70,7 +73,12 @@ public class MenuUtamaActivity extends AppCompatActivity {
             daftarMaba.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new getListMaba().execute();
+                    if(cekKoneksi()){
+                        new getListMaba().execute();
+                    }else{
+                        Toast.makeText(MenuUtamaActivity.this, R.string.no_koneksi, Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             });
 
@@ -99,27 +107,43 @@ public class MenuUtamaActivity extends AppCompatActivity {
 
         }else{
 
+
+            //upload otomatis pada jam 23.00
+            Calendar uploadTime = Calendar.getInstance();
+
+            uploadTime.set(Calendar.HOUR_OF_DAY,23);
+            uploadTime.set(Calendar.MINUTE,10);
+
+            uploadAlarm = (AlarmManager)getSystemService(ALARM_SERVICE);
+            Intent intentAlarm = new Intent(MenuUtamaActivity.this, UploadOtomatis.class);
+            pendingIntent = PendingIntent.getBroadcast(this,0,intentAlarm,0);
+            //setiap jam 23.10 buka UploadOtomatis.java
+            //uploadAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, uploadTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+
             daftarMaba.setImageResource(R.drawable.maba_black);
-            if(sm.getUploadSession()==null){
-                Log.d("Lari","kesini");
+
+//                uploadAlarm.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), (10 * 1000), pendingIntent);
                 upload.setBackgroundResource(R.color.colorAccent);
                 upload.setImageResource(R.drawable.upload_activ);
                 upload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new uploadAbsensi().execute();
+                        if(cekKoneksi()){
+                            if(db.cekRowSizeAbsensi()==""){
+                                Toast.makeText(MenuUtamaActivity.this, "Belum Melakukan Scanning", Toast.LENGTH_SHORT).show();
+                            }else{
+                                new uploadAbsensi().execute();new uploadAbsensi().execute();
+                            }
+
+                        }else{
+                            Toast.makeText(MenuUtamaActivity.this, R.string.no_koneksi, Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 });
-            }else{
-                upload.setImageResource(R.drawable.upload_black);
-                upload.setBackgroundResource(R.color.abu);
-                upload.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(MenuUtamaActivity.this, "Data Absensi Sudah Diupload", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+
+
 
             scannerAbsensi.setBackgroundResource(R.color.tulisan);
             absensiMaba.setBackgroundResource(R.color.colorPrimary);
@@ -136,6 +160,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
                 public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), DecoderActivity.class);
                         startActivity(intent);
+                        finish();
                 }
             });
 
@@ -147,11 +172,10 @@ public class MenuUtamaActivity extends AppCompatActivity {
                     finish();
                 }
             });
-
-
-
-
         }
+
+
+
     }
 
     @Override
@@ -257,6 +281,22 @@ public class MenuUtamaActivity extends AppCompatActivity {
                 daftarMaba.setImageResource(R.drawable.maba_black);
                 daftarMaba.setBackgroundResource(R.color.abu);
 
+                //upload otomatis pada jam 23.00
+                Calendar uploadTime = Calendar.getInstance();
+
+                uploadTime.set(Calendar.HOUR_OF_DAY,23);
+                uploadTime.set(Calendar.MINUTE,10);
+
+                uploadAlarm = (AlarmManager)getSystemService(ALARM_SERVICE);
+                Intent intentAlarm = new Intent(MenuUtamaActivity.this, UploadOtomatis.class);
+                pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,intentAlarm,0);
+                //setiap jam 23.10 buka UploadOtomatis.java
+//                if(sm.getUploadSession()==null){
+//                    uploadAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, uploadTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+//                }
+                                //testing 20 detik sekali
+//                uploadAlarm.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), (10 * 1000), pendingIntent);
+//
                 upload.setBackgroundResource(R.color.colorAccent);
                 upload.setImageResource(R.drawable.upload_activ);
 
@@ -278,6 +318,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), DecoderActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                 });
 
@@ -286,13 +327,18 @@ public class MenuUtamaActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), DaftarMaba.class);
                         startActivity(intent);
+                        finish();
                     }
                 });
 
                 upload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new uploadAbsensi().execute();
+                        if(db.cekRowSizeAbsensi()==""){
+                            Toast.makeText(getApplicationContext(), "Belum Melakukan Scanning", Toast.LENGTH_SHORT).show();
+                        }else{
+                            new uploadAbsensi().execute();
+                        }
                     }
                 });
             }else{
@@ -315,6 +361,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
             super.onPreExecute();
             pDialog = new ProgressDialog(MenuUtamaActivity.this);
             pDialog.setIndeterminate(false);
+            pDialog.setMessage("Upload Data Absensi");
             pDialog.setCancelable(true);
             pDialog.show();
         }
@@ -324,7 +371,6 @@ public class MenuUtamaActivity extends AppCompatActivity {
             absensi = new Absensi();
 
             ArrayList<Absensi> arrayAbsensi = db.selectAllAbsensi();
-            pDialog.setMessage("Upload Data Absensi");
             for(int i = 0;i<arrayAbsensi.size();i++){
                 HashMap<String,String> parameter = new HashMap<>();
                 parameter.put(AtributName.getKODE(), AtributName.getUploadAbsensi());
@@ -332,7 +378,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
                 parameter.put(AtributName.getTANGGAL(),arrayAbsensi.get(i).getTanggal());
                 parameter.put(AtributName.getJamDatang(), arrayAbsensi.get(i).getWaktu());
                 JSONParser jsonParser = new JSONParser();
-
+                db.updateStatusUpload(arrayAbsensi.get(i).getNomorPendaftaran(),arrayAbsensi.get(i).getTanggal());
                 SessionManager sm = new SessionManager(getApplicationContext());
 
                 try{
@@ -350,31 +396,9 @@ public class MenuUtamaActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if(tangkapError == ("")){
-                if(!respon.equals(AtributName.getNOL())){
-                    Toast.makeText(MenuUtamaActivity.this, "Input Berhasil", Toast.LENGTH_LONG).show();
+                if(respon!="0"){
+                    Toast.makeText(MenuUtamaActivity.this, "Upload Berhasil", Toast.LENGTH_LONG).show();
                     sm.createUploadSession();
-
-
-                    if(sm.getUploadSession()=="yes"){
-                        upload.setImageResource(R.drawable.upload_black);
-                        upload.setBackgroundResource(R.color.abu);
-                        upload.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(MenuUtamaActivity.this, "Data Absensi Sudah Diupload", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }else {
-                        Log.d("Lari", "kesini");
-                        upload.setBackgroundResource(R.color.colorAccent);
-                        upload.setImageResource(R.drawable.upload_activ);
-                        upload.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                new uploadAbsensi().execute();
-                            }
-                        });
-                    }
                 }else{
                     Toast.makeText(MenuUtamaActivity.this, "Data Sudah Ada", Toast.LENGTH_LONG).show();
                 }

@@ -66,57 +66,26 @@ public class HasilScan extends AppCompatActivity {
         Log.d("Maba bawah",absensi.getNomorPendaftaran()+absensi.getTanggal()+absensi.getWaktu());
 
         dialogBuilder.setView(dialView);
-        if(db.selectRow(id)==""){
-            dialogBuilder.setTitle("Nama Maba Tidak Ada pada Daftar");
-            dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(getApplicationContext(), DecoderActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-            AlertDialog alertDialog = dialogBuilder.create();
-            alertDialog.show();
-            alertDialog.setCancelable(false);
-        }else {
-            if(db.selectWaktu(absensi.getNomorPendaftaran(),absensi.getTanggal())==""){
+
                 dialogBuilder.setTitle(db.selectRow(id));
                 dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        db.insertAbsensi(absensi.getNomorPendaftaran(), absensi.getTanggal(), absensi.getWaktu());
+                        String statusUpload="Belum Upload";
+                        db.insertAbsensi(absensi.getNomorPendaftaran(), absensi.getTanggal(), absensi.getWaktu(),statusUpload);
                         Toast.makeText(HasilScan.this, "Data Absensi Disimpan", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(HasilScan.this, DecoderActivity.class);
                         startActivity(intent);
                         finish();
-//                    new uploadAbsensi().execute();
                     }
                 });
                 AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
                 alertDialog.setCancelable(false);
-            }else{
-                dialogBuilder.setTitle("Data Absensi Sudah Ada");
-                dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(HasilScan.this, DecoderActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-                AlertDialog alertDialog = dialogBuilder.create();
-                alertDialog.show();
-                alertDialog.setCancelable(false);
-            }
 
-        }
 
 
     }
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();

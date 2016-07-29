@@ -13,7 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
+import com.example.septiawanaji.stisbroadcast.Database.DatabaseHandler;
+import com.example.septiawanaji.stisbroadcast.MenuUtama.MenuUtamaActivity;
 import com.example.septiawanaji.stisbroadcast.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Septiawan Aji on 7/7/2016.
@@ -23,6 +28,8 @@ public class DecoderActivity extends AppCompatActivity implements QRCodeReaderVi
     private TextView myTextView;
     private QRCodeReaderView mydecoderview;
     private Button ok,no,dec;
+    private DatabaseHandler db;
+    private TextView status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +46,21 @@ public class DecoderActivity extends AppCompatActivity implements QRCodeReaderVi
 
     @Override
     public void onQRCodeRead(String text, PointF[] points) {
-        onPause();
-        Intent intent = new Intent(getApplicationContext(),HasilScan.class);
-        intent.putExtra("ID",text);
-        startActivity(intent);
-        finish();
+        status = (TextView)findViewById(R.id.statusScan);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        db = new DatabaseHandler(getApplicationContext());
+        if(db.selectRow(text)==""){
+            status.setText("Maba Tidak Ada di Daftar");
+        }else{
+            if(db.selectWaktu(text,sdf.format(new Date()))==""){
+                Intent intent = new Intent(getApplicationContext(),HasilScan.class);
+                intent.putExtra("ID",text);
+                startActivity(intent);
+                finish();
+            }else{
+                status.setText("Absensi Maba Tersebut Sudah Diinput");
+            }
+        }
     }
 
     @Override
@@ -66,6 +83,15 @@ public class DecoderActivity extends AppCompatActivity implements QRCodeReaderVi
     protected void onPause() {
         super.onPause();
         mydecoderview.getCameraManager().stopPreview();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(),MenuUtamaActivity.class);
+        startActivity(i);
+        finish();
     }
 
 

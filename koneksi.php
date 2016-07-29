@@ -52,20 +52,12 @@ try {
             $jam_datang = $_GET['jam_datang'];
             $time_stamp = date("Y-m-d h:i:sa");
            
-            $queryCek = "SELECT jam_datang FROM absensi WHERE no_pendaftaran= '$nomor_pendaftaran' AND tanggal='$tanggal'";
-            $stmt = $conn->prepare($queryCek);
-                $stmt->execute();
-                $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                $result = $stmt->fetchAll();
-            if(count($result)==0){
+            
                     $queryInsert = "INSERT INTO absensi (tanggal,jam_datang,no_pendaftaran,time_stamp) VAlUES ('$tanggal','$jam_datang','$nomor_pendaftaran','$time_stamp')";
                     $conn->exec($queryInsert);
                     $statusInsert['respon']=1;
                     echo json_encode($statusInsert);                
-            }else{
-                $statusInsert['respon']=0;
-                echo json_encode($statusInsert);
-            }   
+            
         }else if($fungsi == "getListMaba"){
             $nim_pk = $_GET['nim_pk'];
 

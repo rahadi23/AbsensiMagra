@@ -19,8 +19,9 @@ public class StaticFinal {
     private static final String PROVINSI  = "provinsi";
     private static final String TANGGAL_LAHIR  = "tanggal_lahir";
     private static final String PATH_FOTO  = "path_foto";
+    private static final String KELOMPOK  = "namaKelompok";
 
-    private static final String NOMOR_PENDAFTARAN = "no_pendaftaran";
+    private static final String NOMOR_PENDAFTARAN = "id";
 
 
 
@@ -86,6 +87,9 @@ public class StaticFinal {
         return PATH_FOTO;
     }
 
+    public static String getKELOMPOK() {
+        return KELOMPOK;
+    }
 
     public static String getNomorPendaftaran() {
         return NOMOR_PENDAFTARAN;

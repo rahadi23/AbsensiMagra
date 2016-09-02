@@ -74,8 +74,8 @@ public class HasilScan extends AppCompatActivity {
                         String statusUpload="Belum Upload";
                         db.insertAbsensi(absensi.getNomorPendaftaran(), absensi.getTanggal(), absensi.getWaktu(),statusUpload);
                         Toast.makeText(HasilScan.this, "Data Absensi Disimpan", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(HasilScan.this, DecoderActivity.class);
-                        startActivity(intent);
+//                        Intent intent = new Intent(HasilScan.this, DecoderActivity.class);
+//                        startActivity(intent);
                         finish();
                     }
                 });
@@ -86,11 +86,11 @@ public class HasilScan extends AppCompatActivity {
 
 
     }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent i = new Intent(HasilScan.this,DecoderActivity.class);
-        startActivity(i);
-        finish();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        Intent i = new Intent(HasilScan.this,DecoderActivity.class);
+//        startActivity(i);
+//        finish();
+//    }
 }

@@ -5,11 +5,21 @@ package com.example.septiawanaji.stisbroadcast.Objek;
  */
 public class Pk {
 
+    private Pk() {
+
+    }
+
+    private static Pk INSTANCE = new Pk();
+
     private String nim;
     private String nama;
     private String password;
     private int jumlahUpload;
     private String pathFoto;
+
+    public static Pk getINSTANCE() {
+        return INSTANCE;
+    }
 
     public String getNim() {
         return nim;

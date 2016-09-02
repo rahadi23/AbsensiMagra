@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.septiawanaji.stisbroadcast.AlarmManager.UploadOtomatis;
@@ -25,6 +26,7 @@ import com.example.septiawanaji.stisbroadcast.ListMaba.DaftarMaba;
 import com.example.septiawanaji.stisbroadcast.Objek.Absensi;
 import com.example.septiawanaji.stisbroadcast.Objek.AtributName;
 import com.example.septiawanaji.stisbroadcast.Objek.Maba;
+import com.example.septiawanaji.stisbroadcast.Objek.Pk;
 import com.example.septiawanaji.stisbroadcast.Objek.StaticFinal;
 import com.example.septiawanaji.stisbroadcast.Scan.DecoderActivity;
 import com.example.septiawanaji.stisbroadcast.R;
@@ -38,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by Septiawan Aji on 6/28/2016.
  */
@@ -45,8 +49,9 @@ public class MenuUtamaActivity extends AppCompatActivity {
     SessionManager sm;
     HashMap<String,String> hm;
     DatabaseHandler db;
-    ImageButton daftarMaba,scannerAbsensi,absensiMaba,upload;
+    CircleImageView daftarMaba,scannerAbsensi,absensiMaba,upload;
     PendingIntent pendingIntent;
+    TextView namaPk, nimPk;
 
     AlarmManager uploadAlarm;
     @Override
@@ -58,14 +63,20 @@ public class MenuUtamaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_utama);
 
-        daftarMaba = (ImageButton)findViewById(R.id.imageButtonDaftarMaba);
-        scannerAbsensi = (ImageButton) findViewById(R.id.imageButtonScannerAbsensi);
-        absensiMaba = (ImageButton)findViewById(R.id.imageButtonAbsensiMaba);
-        upload = (ImageButton)findViewById(R.id.imageButtonUpload);
+        daftarMaba = (CircleImageView) findViewById(R.id.imageButtonDaftarMaba);
+        scannerAbsensi = (CircleImageView) findViewById(R.id.imageButtonScannerAbsensi);
+        absensiMaba = (CircleImageView) findViewById(R.id.imageButtonAbsensiMaba);
+        upload = (CircleImageView) findViewById(R.id.imageButtonUpload);
+        namaPk = (TextView)findViewById(R.id.nama_panitia);
+        nimPk = (TextView)findViewById(R.id.nim_panitia);
+
+        Pk p = Pk.getINSTANCE();
+        namaPk.setText(p.getNama());
+        nimPk.setText(p.getNim());
 
         if(db.cekRowSizeMaba()==""){
 
-            daftarMaba.setBackgroundResource(R.color.input_daftar);
+//            daftarMaba.setBackgroundResource(R.color.input_daftar);
             scannerAbsensi.setImageResource(R.drawable.scan_black);
             absensiMaba.setImageResource(R.drawable.tugas_maba_black);
             upload.setImageResource(R.drawable.upload_black);
@@ -124,7 +135,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
             daftarMaba.setImageResource(R.drawable.maba_black);
 
 //                uploadAlarm.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), (10 * 1000), pendingIntent);
-                upload.setBackgroundResource(R.color.colorAccent);
+//                upload.setBackgroundResource(R.color.colorAccent);
                 upload.setImageResource(R.drawable.upload_activ);
                 upload.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -145,8 +156,8 @@ public class MenuUtamaActivity extends AppCompatActivity {
 
 
 
-            scannerAbsensi.setBackgroundResource(R.color.tulisan);
-            absensiMaba.setBackgroundResource(R.color.colorPrimary);
+//            scannerAbsensi.setBackgroundResource(R.color.tulisan);
+//            absensiMaba.setBackgroundResource(R.color.colorPrimary);
 
             daftarMaba.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -160,7 +171,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
                 public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), DecoderActivity.class);
                         startActivity(intent);
-                        finish();
+//                        finish();
                 }
             });
 
@@ -169,7 +180,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(getApplicationContext(), DaftarMaba.class);
                     startActivity(intent);
-                    finish();
+//                    finish();
                 }
             });
         }
@@ -232,8 +243,8 @@ public class MenuUtamaActivity extends AppCompatActivity {
             HashMap<String,String> parameter = new HashMap<>();
             HashMap<String,String> pk = sm.getUserSession();
             Log.d("pk", pk.toString());
-            parameter.put(AtributName.getKODE(), API.getGetListMaba());
             parameter.put(AtributName.getNimPk(),pk.get(AtributName.getNIM()));
+            parameter.put(AtributName.getKODE(), API.getGetListMaba());
             Log.d("par", parameter.toString());
 
             JSONParser jsonParser = new JSONParser();
@@ -252,6 +263,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
                     maba.setAsalProp(c.getString(AtributName.getAsalProp()));
                     maba.setNoHp(c.getString(AtributName.getNoHp()));
                     maba.setEmail(c.getString(StaticFinal.getEMAIL()));
+                    maba.setKelompok(c.getString(StaticFinal.getKELOMPOK()));
 
                     map.put(StaticFinal.getNAMA(), maba.getNama());
                     map.put(StaticFinal.getPathFoto(), maba.getPathFoto());
@@ -259,9 +271,10 @@ public class MenuUtamaActivity extends AppCompatActivity {
                     map.put(AtributName.getNoHp(),maba.getNoHp());
                     map.put(AtributName.getAsalProp(),maba.getAsalProp());
                     map.put(StaticFinal.getEMAIL(), maba.getEmail());
+                    map.put(StaticFinal.getKELOMPOK(), maba.getKelompok());
 
 
-                    db.insertRow(maba.getNomorPendaftaran(), maba.getNama(), maba.getPathFoto(),maba.getAsalProp(),maba.getNoHp(), maba.getEmail());
+                    db.insertRow(maba.getNomorPendaftaran(), maba.getNama(), maba.getPathFoto(),maba.getAsalProp(),maba.getNoHp(), maba.getEmail(), maba.getKelompok());
                     arrayList.add(map);
                 }
 
@@ -279,7 +292,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
             if(tangkapError==""){
                 Toast.makeText(getApplicationContext(), "Download Berhasil", Toast.LENGTH_SHORT).show();
                 daftarMaba.setImageResource(R.drawable.maba_black);
-                daftarMaba.setBackgroundResource(R.color.abu);
+//                daftarMaba.setBackgroundResource(R.color.abu);
 
                 //upload otomatis pada jam 23.00
                 Calendar uploadTime = Calendar.getInstance();
@@ -297,13 +310,13 @@ public class MenuUtamaActivity extends AppCompatActivity {
                                 //testing 20 detik sekali
 //                uploadAlarm.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), (10 * 1000), pendingIntent);
 //
-                upload.setBackgroundResource(R.color.colorAccent);
+//                upload.setBackgroundResource(R.color.colorAccent);
                 upload.setImageResource(R.drawable.upload_activ);
 
-                scannerAbsensi.setBackgroundResource(R.color.tulisan);
+//                scannerAbsensi.setBackgroundResource(R.color.tulisan);
                 scannerAbsensi.setImageResource(R.drawable.scan);
 
-                absensiMaba.setBackgroundResource(R.color.colorPrimary);
+//                absensiMaba.setBackgroundResource(R.color.colorPrimary);
                 absensiMaba.setImageResource(R.drawable.tugas_maba);
 
                 daftarMaba.setOnClickListener(new View.OnClickListener() {
@@ -318,7 +331,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), DecoderActivity.class);
                         startActivity(intent);
-                        finish();
+//                        finish();
                     }
                 });
 
@@ -327,7 +340,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), DaftarMaba.class);
                         startActivity(intent);
-                        finish();
+//                        finish();
                     }
                 });
 
@@ -373,10 +386,10 @@ public class MenuUtamaActivity extends AppCompatActivity {
             ArrayList<Absensi> arrayAbsensi = db.selectStatusBelumUpload();
             for(int i = 0;i<arrayAbsensi.size();i++){
                 HashMap<String,String> parameter = new HashMap<>();
+                parameter.put(AtributName.getJamDatang(), arrayAbsensi.get(i).getWaktu());
+                parameter.put(AtributName.getTANGGAL(),arrayAbsensi.get(i).getTanggal());
                 parameter.put(AtributName.getKODE(), AtributName.getUploadAbsensi());
                 parameter.put(AtributName.getNomorPendaftaran(),arrayAbsensi.get(i).getNomorPendaftaran());
-                parameter.put(AtributName.getTANGGAL(),arrayAbsensi.get(i).getTanggal());
-                parameter.put(AtributName.getJamDatang(), arrayAbsensi.get(i).getWaktu());
                 JSONParser jsonParser = new JSONParser();
                 db.updateStatusUpload(arrayAbsensi.get(i).getNomorPendaftaran(),arrayAbsensi.get(i).getTanggal());
                 SessionManager sm = new SessionManager(getApplicationContext());

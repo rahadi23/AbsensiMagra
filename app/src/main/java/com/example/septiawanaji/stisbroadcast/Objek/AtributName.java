@@ -6,6 +6,7 @@ package com.example.septiawanaji.stisbroadcast.Objek;
 public class AtributName {
 
     private static final String NIM = "nim";
+    private static final String ID = "id";
     private static final String PASSWORD = "password";
     private static final String NAMA = "nama";
     private static final String SENTENCES = "sentences";
@@ -15,9 +16,9 @@ public class AtributName {
     private static final String SESSION = "session";
     private static final String PATH_FOTO = "path_foto";
 
-    private static final String NIM_PK = "nim_pk";
-    private static final String NO_HP = "no_hp";
-    private static final String ASAL_PROP = "asal_prop";
+    private static final String NIM_PK = "pk";
+    private static final String NO_HP = "noHp";
+    private static final String ASAL_PROP = "daerahAsalProv";
 
 
     //nama-nama fungsi server
@@ -35,10 +36,13 @@ public class AtributName {
     private static final String TOTAL_UPLOAD = "total_upload";
     private static final String TOTAL_WORD = "totalWord";
 
-    private static final String NOMOR_PENDAFTARAN = "nomor_pendaftaran";
+    private static final String NOMOR_PENDAFTARAN = "id";
     private static final String TANGGAL = "tanggal";
     private static final String JAM_DATANG = "jam_datang";
 
+    public static String getID() {
+        return ID;
+    }
 
     public static String getNIM() {
         return NIM;

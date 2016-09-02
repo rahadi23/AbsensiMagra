@@ -10,6 +10,7 @@ public class Maba {
     private String noHp;
     private String asalProp;
     private String email;
+    private String kelompok;
 
     public String getNomorPendaftaran() {
         return nomorPendaftaran;
@@ -57,5 +58,13 @@ public class Maba {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getKelompok() {
+        return kelompok;
+    }
+
+    public void setKelompok(String kelompok) {
+        this.kelompok = kelompok;
     }
 }

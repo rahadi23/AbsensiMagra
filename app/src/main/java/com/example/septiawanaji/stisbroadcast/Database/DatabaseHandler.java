@@ -31,6 +31,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String ASAL_PROP = "asal_prop";
     private static final String NO_HP = "no_hp";
     private static final String EMAIL = "email";
+    private static final String KELOMPOK = "kelompok";
     private static final String TANGGAL = "tanggal";
     private static final String JAM_KEDATANGAN = "jam_kedatangan";
     private static final String ID = "id";
@@ -56,6 +57,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 +ASAL_PROP+" TEXT,"
                 +NO_HP+" TEXT,"
                 +EMAIL+" TEXT,"
+                +KELOMPOK+" TEXT,"
                 +NAMA+" TEXT)";
         db.execSQL(CREATE_MABA_TABLE);
         String CREATE_ABSENSI_TABLE = "CREATE TABLE "+TABEL_ABSENSI_MABA +" ("
@@ -67,7 +69,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_ABSENSI_TABLE);
     }
 
-    public void insertRow(String no,String nama,String pathFoto,String asalProp,String noHP,String email){
+    public void insertRow(String no,String nama,String pathFoto,String asalProp,String noHP,String email, String kelompok){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NO,no);
@@ -76,6 +78,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(ASAL_PROP,asalProp);
         values.put(NO_HP,noHP);
         values.put(EMAIL,email);
+        values.put(KELOMPOK,kelompok);
 
         db.insert(TABEL_MABA, null, values);
         Log.d("Insert DB", db.toString());
@@ -100,7 +103,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<Maba> selecAllRows(){
         ArrayList<Maba> array = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT " + NO + ", " + NAMA + ", " + PATH_FOTO + ", " + ASAL_PROP + ", " + NO_HP + ", " + EMAIL + " FROM " + TABEL_MABA, null);
+        Cursor c = db.rawQuery("SELECT " + NO + ", " + NAMA + ", " + PATH_FOTO + ", " + ASAL_PROP + ", " + NO_HP + ", " + EMAIL + ", " + KELOMPOK + " FROM " + TABEL_MABA, null);
         Maba maba;
         if(c.moveToFirst()) {
             do {
@@ -112,6 +115,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 maba.setAsalProp(c.getString(3));
                 maba.setNoHp(c.getString(4));
                 maba.setEmail(c.getString(5));
+                maba.setKelompok(c.getString(6));
 
                 array.add(maba);
             }while(c.moveToNext());

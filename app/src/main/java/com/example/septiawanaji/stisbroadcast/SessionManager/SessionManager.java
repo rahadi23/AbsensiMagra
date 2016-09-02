@@ -29,7 +29,7 @@ public class SessionManager {
     }
 
     public void saveUrlServer(String url){
-        editor.putString(AtributName.getAlamatServer(),"http://"+url+"/rpl/koneksi.php?");
+        editor.putString(AtributName.getAlamatServer(),"http://"+url+"/absensi/");
         editor.commit();
     }
 

@@ -26,15 +26,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/text"
-        android:textSize="20dp"
-        android:text="SCANING IDENTITAS MABA"
-        android:layout_above="@+id/relativeLayout5"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/statusScan"
         android:layout_below="@+id/relativeLayout5"

@@ -95,13 +95,13 @@ public class AdapterDaftarMaba extends ArrayAdapter {
             public void onClick(View v) {
                 resultp = daftarMaba.get(position);
                 Log.d("POSITION",Integer.toString(position));
-                showDialog(resultp.getNama(),resultp.getNoHp(),resultp.getAsalProp(),resultp.getEmail());
+                showDialog(resultp.getNama(),resultp.getNoHp(),resultp.getAsalProp(),resultp.getEmail(), resultp.getKelompok());
             }
         });
         return itemView;
     }
 
-    public void showDialog(String nama,String noTelp,String asal,String email){
+    public void showDialog(String nama,String noTelp,String asal,String email, String kelompok){
         final AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(context);
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View dialView = inflater.inflate(R.layout.detail_maba_dialog, null);
@@ -117,6 +117,7 @@ public class AdapterDaftarMaba extends ArrayAdapter {
         noTelpMaba.setText("Telp : "+noTelp);
         asalMaba.setText("Asal : " + asal);
         emailMaba.setText("Email : "+ email);
+        emailMaba.setText("Kelompok : "+ kelompok);
 
         dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override

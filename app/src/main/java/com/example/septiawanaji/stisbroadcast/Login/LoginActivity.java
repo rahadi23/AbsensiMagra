@@ -31,6 +31,9 @@ import com.example.septiawanaji.stisbroadcast.SessionManager.SessionManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 /**
@@ -54,13 +57,29 @@ public class LoginActivity extends AppCompatActivity {
         next = (Button)findViewById(R.id.next_1);
 //        daftar = (Button)findViewById(R.id.prev_1);
 
-        user = new Pk();
+        user = Pk.getINSTANCE();
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 user.setNim(nomor_daftar.getText().toString());
-                user.setPassword(password.getText().toString());
+                try {
+                    MessageDigest md = MessageDigest.getInstance("MD5");
+                    byte[] res = password.getText().toString().getBytes("UTF-8");
+                    byte[] b = md.digest(res);
+
+                    //Convert MD5 bytes to Hex
+                    StringBuffer sb = new StringBuffer();
+                    for (int i = 0; i < b.length; i++) {
+                        sb.append(Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1));
+                    }
+
+                    user.setPassword(sb.toString());
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
 
                 if(user.getNim().isEmpty()){
                     Toast.makeText(LoginActivity.this, R.string.nomor_daftar_kosong, Toast.LENGTH_SHORT).show();
@@ -151,10 +170,10 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             Log.d("Do", "inback");
             HashMap<String,String> parameter = new HashMap<>();
-            parameter.put(AtributName.getKODE(),AtributName.getGetStatusLogin());
             parameter.put(AtributName.getNIM(), user.getNim());
+            parameter.put(AtributName.getKODE(),AtributName.getGetStatusLogin());
             parameter.put(AtributName.getPASSWORD(), user.getPassword());
-            Log.d("PArameter", parameter.toString());
+            Log.d("Parameter", parameter.toString());
 
             JSONParser jsonParser = new JSONParser();
             SessionManager sm = new SessionManager(getApplicationContext());
@@ -172,9 +191,10 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject c = data.getJSONObject(i);
 
                         user.setNama(c.getString(AtributName.getNAMA()));
+                        user.setNim(c.getString(AtributName.getID()));
                     }
                 }
-
+//
             }catch (Exception e){
                 tangkapError = e.getMessage();
             }
@@ -198,6 +218,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
             }else{
+                Log.e("SERVER ERROR", tangkapError);
                 Toast.makeText(LoginActivity.this, R.string.server_error, Toast.LENGTH_SHORT).show();
             }
             pDialog.dismiss();

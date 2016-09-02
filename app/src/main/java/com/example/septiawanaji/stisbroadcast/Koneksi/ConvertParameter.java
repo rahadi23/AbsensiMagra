@@ -19,9 +19,9 @@ public class ConvertParameter {
             if(first)
                 first = false;
             else
-                result.append("&");
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
+                result.append("/");
+//            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+//            result.append("=");
             result.append(URLEncoder.encode(entry.getValue(),"UTF-8"));
         }
         Log.d("QUERY ", result.toString());

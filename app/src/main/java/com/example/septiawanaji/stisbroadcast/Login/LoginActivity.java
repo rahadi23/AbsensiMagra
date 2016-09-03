@@ -16,16 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
-import com.example.septiawanaji.stisbroadcast.Koneksi.API;
-import com.example.septiawanaji.stisbroadcast.Koneksi.ConvertParameter;
 import com.example.septiawanaji.stisbroadcast.Koneksi.JSONParser;
 import com.example.septiawanaji.stisbroadcast.Koneksi.Server;
 import com.example.septiawanaji.stisbroadcast.MenuUtama.MenuUtamaActivity;
 import com.example.septiawanaji.stisbroadcast.Objek.AtributName;
 import com.example.septiawanaji.stisbroadcast.Objek.Pk;
 import com.example.septiawanaji.stisbroadcast.R;
-//import com.example.septiawanaji.stisbroadcast.Register.RegisterActivity;
 import com.example.septiawanaji.stisbroadcast.SessionManager.SessionManager;
 
 import org.json.JSONArray;
@@ -34,7 +30,10 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+//import com.example.septiawanaji.stisbroadcast.Register.RegisterActivity;
 
 /**
  * Created by Septiawan Aji on 6/14/2016.
@@ -170,22 +169,35 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             Log.d("Do", "inback");
             HashMap<String,String> parameter = new HashMap<>();
-            parameter.put(AtributName.getNIM(), user.getNim());
-            parameter.put(AtributName.getKODE(),AtributName.getGetStatusLogin());
-            parameter.put(AtributName.getPASSWORD(), user.getPassword());
+//            parameter.put(AtributName.getNIM(), user.getNim());
+//            parameter.put(AtributName.getKODE(),AtributName.getGetStatusLogin());
+//            parameter.put(AtributName.getPASSWORD(), user.getPassword());
+
+            ArrayList<String> provita = new ArrayList<>();
+            provita.add(AtributName.getGetStatusLogin());
+            provita.add(user.getNim());
+            provita.add(user.getPassword());
+
             Log.d("Parameter", parameter.toString());
 
             JSONParser jsonParser = new JSONParser();
             SessionManager sm = new SessionManager(getApplicationContext());
 
             try{
-                json = jsonParser.getJSONFromUrl(sm.getAlamatServer() + ConvertParameter.getQuery(parameter));
+//                json = jsonParser.getJSONFromUrl(sm.getAlamatServer() + ConvertParameter.getQuery(parameter));
+                json = jsonParser.getJSONFromUrl(sm.getAlamatServer()+provita.get(0)+"/"+provita.get(1)+"/"+provita.get(2));
                 respon = json.getString(AtributName.getRESPON());
                 Log.d("Respon",respon);
                 if(!respon.equals(AtributName.getNOL())){
                     parameter.remove(AtributName.getKODE());
                     parameter.put(AtributName.getKODE(),AtributName.getGetNama());
-                    json = jsonParser.getJSONFromUrl(sm.getAlamatServer() + ConvertParameter.getQuery(parameter));
+
+                    ArrayList<String> atikaUkh = new ArrayList<>();
+                    atikaUkh.add(AtributName.getGetNama());
+                    atikaUkh.add(user.getNim());
+                    atikaUkh.add(user.getPassword());
+//                    json = jsonParser.getJSONFromUrl(sm.getAlamatServer() + ConvertParameter.getQuery(parameter));
+                    json = jsonParser.getJSONFromUrl(sm.getAlamatServer()+atikaUkh.get(0)+"/"+atikaUkh.get(1)+"/"+atikaUkh.get(2));
                     data = json.getJSONArray(AtributName.getRESPON());
                     for(int i = 0;i<data.length();i++){
                         JSONObject c = data.getJSONObject(i);
@@ -218,7 +230,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
             }else{
-                Log.e("SERVER ERROR", tangkapError);
+//                Log.e("SERVER ERROR", tangkapError);
                 Toast.makeText(LoginActivity.this, R.string.server_error, Toast.LENGTH_SHORT).show();
             }
             pDialog.dismiss();

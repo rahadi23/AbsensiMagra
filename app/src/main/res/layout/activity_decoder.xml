@@ -4,32 +4,108 @@
     android:layout_height="match_parent">
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="20dp" />
-    <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_gravity="center"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/relativeLayout5">
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <com.dlazaro66.qrcodereaderview.QRCodeReaderView
-                android:id="@+id/qrdecoderview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </android.support.v7.widget.CardView>
+        android:layout_height="20dp"
+        android:id="@+id/textView4" />
 
-    </RelativeLayout>
+        <com.dlazaro66.qrcodereaderview.QRCodeReaderView
+            android:id="@+id/qrdecoderview"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_margin="20dp" />
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Status : "
+                android:id="@+id/textView2"
+                android:textSize="24dp"
+                android:textAlignment="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/statusScan"
+                android:layout_below="@+id/relativeLayout5"
+                android:layout_centerHorizontal="true"
+                android:text="belum melakukan scan"
+                android:textSize="24dp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:background="@drawable/kotak"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_below="@+id/textView"
+            android:layout_marginTop="60dp"
+            android:id="@+id/relativeLayout6">
+
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="350dp"
+                android:id="@+id/cewekJalu"
+                android:background="#ebebeb"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/x" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxxxxxx"
+                android:id="@+id/namaMaba"
+                android:layout_below="@+id/cewekJalu"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Simpan"
+            android:id="@+id/btnSimpan"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/relativeLayout6"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="#ffffff"
+            android:textSize="24dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:visibility="gone" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/statusScan"
-        android:layout_below="@+id/relativeLayout5"
-        android:layout_centerHorizontal="true" />
-
+        android:text="Arahkan kamera ke QR code maba"
+        android:id="@+id/textView"
+        android:textSize="24dp"
+        android:textAlignment="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_below="@+id/qrdecoderview"
+        android:gravity="center_horizontal" />
 
 </RelativeLayout>

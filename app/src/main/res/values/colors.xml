@@ -8,4 +8,9 @@
     <color name="putih">#ffffff</color>
     <color name="tulisan">#b73100</color>
     <color name="abu">#d2d2d2</color>
+
+    <color name="biru">#6c9fd0</color>
+    <color name="merah">#f2444f</color>
+    <color name="oranye">#f49b49</color>
+    <color name="hijau">#a1de6c</color>
 </resources>

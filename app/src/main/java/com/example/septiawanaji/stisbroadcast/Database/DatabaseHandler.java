@@ -10,16 +10,14 @@ import android.util.Log;
 import com.example.septiawanaji.stisbroadcast.Objek.Absensi;
 import com.example.septiawanaji.stisbroadcast.Objek.Maba;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Septiawan Aji on 7/20/2016.
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int DATABSE_VERSION = 5;
+    private static final int DATABSE_VERSION = 11;
     private static final String DATABASE_NAME = "maba_db";
 
     private static final String TABEL_MABA = "tabel_maba";
@@ -85,19 +83,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public String selectRow(String no){
+    public ArrayList<String> selectRow(String no){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c  = db.rawQuery("SELECT " + NAMA + " FROM " + TABEL_MABA + " WHERE " + NO + "='" + no + "'", null);
+        ArrayList<String> namaPath = new ArrayList<>();
+        Cursor c  = db.rawQuery("SELECT " + NAMA+","+PATH_FOTO+ " FROM " + TABEL_MABA + " WHERE " + NO + "='" + no + "'", null);
 
         String namaMaba="";
         if(c!=null && c.moveToFirst()){
-            namaMaba=c.getString(0);
+            namaPath.add(c.getString(0));
+            namaPath.add(c.getString(1));
         }else{
-            namaMaba="";
+            namaPath.clear();
         }
         Log.d("namaMaba", namaMaba);
         c.close();
-        return namaMaba;
+        return namaPath;
     }
 
     public ArrayList<Maba> selecAllRows(){

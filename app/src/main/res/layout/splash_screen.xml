@@ -5,11 +5,33 @@
     android:background="@color/colorPrimary" android:fitsSystemWindows="true">
 
     <ImageView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
         android:src="@drawable/logo"
         android:layout_gravity="center_horizontal"
-        android:layout_centerVertical="true"
+        android:id="@+id/imageView4"
+        android:layout_marginBottom="210dp"
+        android:layout_above="@+id/textView3"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageView3"
+        android:src="@drawable/logokomnet2"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Powered by"
+        android:id="@+id/textView3"
+        android:layout_above="@+id/imageView3"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="24dp" />
 
 </RelativeLayout>

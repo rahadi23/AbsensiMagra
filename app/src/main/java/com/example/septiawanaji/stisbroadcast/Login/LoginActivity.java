@@ -1,21 +1,17 @@
 package com.example.septiawanaji.stisbroadcast.Login;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.septiawanaji.stisbroadcast.Koneksi.API;
 import com.example.septiawanaji.stisbroadcast.Koneksi.JSONParser;
 import com.example.septiawanaji.stisbroadcast.Koneksi.Server;
 import com.example.septiawanaji.stisbroadcast.MenuUtama.MenuUtamaActivity;
@@ -90,62 +86,62 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_login, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        if(id==R.id.action_settings){
+//            showDialog();
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//
+//    }
 
-        if(id==R.id.action_settings){
-            showDialog();
-        }
-
-        return super.onOptionsItemSelected(item);
-
-    }
-
-    public void showDialog(){
-        server = new Server();
-        sessionManager = new SessionManager(getApplicationContext());
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.server_dialog, null);
-        dialogBuilder.setView(dialogView);
-
-        final EditText aturServer = (EditText)dialogView.findViewById(R.id.atur_server);
-        if(sessionManager.getAlamatServer() != null){
-            aturServer.setText(sessionManager.getAlamatServer());
-        }
-
-        dialogBuilder.setTitle("Atur Server");
-        dialogBuilder.setMessage("Masukan Alamat Server");
-        dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (aturServer.getText().toString().isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Alamat Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
-                } else {
-                    sessionManager.deleteSession();
-                    sessionManager.saveUrlServer(aturServer.getText().toString());
-                }
-
-            }
-        });
-
-        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        AlertDialog b = dialogBuilder.create();
-        b.show();
-    }
+//    public void showDialog(){
+//        server = new Server();
+//        sessionManager = new SessionManager(getApplicationContext());
+//        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+//        LayoutInflater inflater = this.getLayoutInflater();
+//        final View dialogView = inflater.inflate(R.layout.server_dialog, null);
+//        dialogBuilder.setView(dialogView);
+//
+//        final EditText aturServer = (EditText)dialogView.findViewById(R.id.atur_server);
+//        if(sessionManager.getAlamatServer() != null){
+//            aturServer.setText(sessionManager.getAlamatServer());
+//        }
+//
+//        dialogBuilder.setTitle("Atur Server");
+//        dialogBuilder.setMessage("Masukan Alamat Server");
+//        dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                if (aturServer.getText().toString().isEmpty()) {
+//                    Toast.makeText(LoginActivity.this, "Alamat Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    sessionManager.deleteSession();
+//                    sessionManager.saveUrlServer(aturServer.getText().toString());
+//                }
+//
+//            }
+//        });
+//
+//        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//        });
+//        AlertDialog b = dialogBuilder.create();
+//        b.show();
+//    }
 
 
     private class getStatusLogin extends AsyncTask<String,Void,String>{
@@ -185,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
 
             try{
 //                json = jsonParser.getJSONFromUrl(sm.getAlamatServer() + ConvertParameter.getQuery(parameter));
-                json = jsonParser.getJSONFromUrl(sm.getAlamatServer()+provita.get(0)+"/"+provita.get(1)+"/"+provita.get(2));
+                json = jsonParser.getJSONFromUrl(API.getAlamatUrl()+provita.get(0)+"/"+provita.get(1)+"/"+provita.get(2));
                 respon = json.getString(AtributName.getRESPON());
                 Log.d("Respon",respon);
                 if(!respon.equals(AtributName.getNOL())){
@@ -197,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
                     atikaUkh.add(user.getNim());
                     atikaUkh.add(user.getPassword());
 //                    json = jsonParser.getJSONFromUrl(sm.getAlamatServer() + ConvertParameter.getQuery(parameter));
-                    json = jsonParser.getJSONFromUrl(sm.getAlamatServer()+atikaUkh.get(0)+"/"+atikaUkh.get(1)+"/"+atikaUkh.get(2));
+                    json = jsonParser.getJSONFromUrl(API.getAlamatUrl()+atikaUkh.get(0)+"/"+atikaUkh.get(1)+"/"+atikaUkh.get(2));
                     data = json.getJSONArray(AtributName.getRESPON());
                     for(int i = 0;i<data.length();i++){
                         JSONObject c = data.getJSONObject(i);

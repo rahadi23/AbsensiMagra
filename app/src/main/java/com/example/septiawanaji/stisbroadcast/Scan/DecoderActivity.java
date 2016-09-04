@@ -81,8 +81,12 @@ public class DecoderActivity extends AppCompatActivity implements QRCodeReaderVi
 
                 absensi = new Absensi();
                 absensi.setNomorPendaftaran(text);
+
+
                 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
                 absensi.setTanggal(sdf1.format(new Date()));
+
+
                 SimpleDateFormat sdf2 = new SimpleDateFormat("kk:mm:ss");
                 absensi.setWaktu(sdf2.format(new Date()));
 //                status.setText(text+"\n"+absensi.getTanggal()+"\n"+absensi.getWaktu());

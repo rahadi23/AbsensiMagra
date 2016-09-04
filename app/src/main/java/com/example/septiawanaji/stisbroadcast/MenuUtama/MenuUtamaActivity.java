@@ -4,21 +4,23 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.septiawanaji.stisbroadcast.AlarmManager.UploadOtomatis;
 import com.example.septiawanaji.stisbroadcast.Database.DatabaseHandler;
 import com.example.septiawanaji.stisbroadcast.Koneksi.API;
 import com.example.septiawanaji.stisbroadcast.Koneksi.JSONParser;
@@ -37,7 +39,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -76,6 +77,23 @@ public class MenuUtamaActivity extends AppCompatActivity {
         Pk p = Pk.getINSTANCE();
         namaPk.setText(p.getNama());
         nimPk.setText(p.getNim());
+//        //upload otomatis pada jam 23.00
+//        Calendar uploadTime = Calendar.getInstance();
+//
+//        uploadTime.set(Calendar.HOUR_OF_DAY,23);
+//        uploadTime.set(Calendar.MINUTE,1);
+//        uploadTime.set(Calendar.SECOND,1);
+//
+//        uploadAlarm = (AlarmManager)getSystemService(ALARM_SERVICE);
+//        Intent intentAlarm = new Intent(MenuUtamaActivity.this, UploadOtomatis.class);
+//        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),123,intentAlarm,PendingIntent.FLAG_ONE_SHOT);
+//        //setiap jam 23.10 buka UploadOtomatis.java
+//
+//        //testing 20 detik sekali
+////                uploadAlarm.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), (60 * 1000), pendingIntent);
+//        Log.d("Milis cuk", String.valueOf(uploadTime.getTimeInMillis()));
+//        uploadAlarm.set(AlarmManager.RTC_WAKEUP, uploadTime.getTimeInMillis(), pendingIntent);
+
 
         if(db.cekRowSizeMaba()==""){
 
@@ -123,25 +141,10 @@ public class MenuUtamaActivity extends AppCompatActivity {
 
         }else{
 
-
-            //upload otomatis pada jam 23.00
-            Calendar uploadTime = Calendar.getInstance();
-
-            uploadTime.set(Calendar.HOUR_OF_DAY,23);
-            uploadTime.set(Calendar.MINUTE,10);
-
-            uploadAlarm = (AlarmManager)getSystemService(ALARM_SERVICE);
-            Intent intentAlarm = new Intent(MenuUtamaActivity.this, UploadOtomatis.class);
-            pendingIntent = PendingIntent.getBroadcast(this,0,intentAlarm,0);
-            //setiap jam 23.10 buka UploadOtomatis.java
-            //uploadAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, uploadTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
-
             daftarMaba.setImageResource(R.drawable.maba_black_new);
             layDaftarMaba.setBackgroundResource(R.color.abu);
 
-//                uploadAlarm.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), (10 * 1000), pendingIntent);
-//                upload.setBackgroundResource(R.color.colorAccent);
+
                 upload.setImageResource(R.drawable.upload_activ_new);
                 upload.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -190,9 +193,6 @@ public class MenuUtamaActivity extends AppCompatActivity {
                 }
             });
         }
-
-
-
     }
 
     @Override
@@ -207,15 +207,47 @@ public class MenuUtamaActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id==R.id.action_setting_logout){
-            sm.deleteSession();
-            db.deleteAllMaba();
-            Intent intent = new Intent(getApplicationContext(),SplashScreen.class);
-            startActivity(intent);
-            finish();
+            showDialog();
         }
 
         return super.onOptionsItemSelected(item);
 
+    }
+
+    public void showDialog(){
+        android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.pass_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText password = (EditText)dialogView.findViewById(R.id.password);
+
+        dialogBuilder.setTitle("Logout");
+        dialogBuilder.setMessage("Mau logout? Yakin? Bener? Ga nyesel? Nanti ilang lho database-nya? Serah deh..");
+        dialogBuilder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (password.getText().toString().equals("yoi")) {
+                    sm.deleteSession();
+                    db.deleteAllMaba();
+                    Intent intent = new Intent(getApplicationContext(), SplashScreen.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(MenuUtamaActivity.this, "Password salah", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        dialogBuilder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        android.support.v7.app.AlertDialog b = dialogBuilder.create();
+        b.show();
     }
 
     public boolean cekKoneksi() {
@@ -264,7 +296,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
             JSONParser jsonParser = new JSONParser();
             try{
 //                json = jsonParser.getJSONFromUrl(sm.getAlamatServer()+ ConvertParameter.getQuery(parameter));
-                json = jsonParser.getJSONFromUrl(sm.getAlamatServer()+rezkya.get(0)+"/"+rezkya.get(1));
+                json = jsonParser.getJSONFromUrl(API.getAlamatUrl()+rezkya.get(0)+"/"+rezkya.get(1));
                 respon = json.getJSONArray(API.getRESPON());
                 Log.d("Daftar Maba",respon.toString());
                 for(int i=0;i<respon.length();i++){
@@ -309,22 +341,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
                 daftarMaba.setImageResource(R.drawable.maba_black_new);
                 layDaftarMaba.setBackgroundResource(R.color.abu);
 
-                //upload otomatis pada jam 23.00
-                Calendar uploadTime = Calendar.getInstance();
 
-                uploadTime.set(Calendar.HOUR_OF_DAY,23);
-                uploadTime.set(Calendar.MINUTE,10);
-
-                uploadAlarm = (AlarmManager)getSystemService(ALARM_SERVICE);
-                Intent intentAlarm = new Intent(MenuUtamaActivity.this, UploadOtomatis.class);
-                pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,intentAlarm,0);
-                //setiap jam 23.10 buka UploadOtomatis.java
-//                if(sm.getUploadSession()==null){
-//                    uploadAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, uploadTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-//                }
-                                //testing 20 detik sekali
-//                uploadAlarm.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), (10 * 1000), pendingIntent);
-//
                 layUpload.setBackgroundResource(R.color.hijau);
                 upload.setImageResource(R.drawable.upload_activ_new);
 
@@ -417,7 +434,7 @@ public class MenuUtamaActivity extends AppCompatActivity {
 
                 try{
 //                    json = jsonParser.getJSONFromUrl(sm.getAlamatServer() + ConvertParameter.getQuery(arrayParameterGet));
-                    json = jsonParser.getJSONFromUrl(sm.getAlamatServer()+arrayParameterGet.get(0)+"/"+arrayParameterGet.get(1)+"/"+arrayParameterGet.get(2)+"/"+arrayParameterGet.get(3));
+                    json = jsonParser.getJSONFromUrl(API.getAlamatUrl()+arrayParameterGet.get(0)+"/"+arrayParameterGet.get(1)+"/"+arrayParameterGet.get(2)+"/"+arrayParameterGet.get(3));
                     respon = json.getString(AtributName.getRESPON());
                     db.updateStatusUpload(arrayAbsensi.get(i).getNomorPendaftaran(),arrayAbsensi.get(i).getTanggal());
                     Log.d("Respon Insert",respon);

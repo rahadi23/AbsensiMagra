@@ -5,7 +5,7 @@ package com.example.septiawanaji.stisbroadcast.Koneksi;
  */
 public class API {
 
-    private static final String ALAMAT_URL = "http://192.168.43.144/rpl/koneksi.php?";
+    private static final String ALAMAT_URL = "http://stis.ac.id/mp2k/absensi/";
     private static final String ATRIBUTE_SERVER = "a";
     private static final String GET_REGISTER_STATUS = "getRegisterStatus";
     private static final String GET_STATUS_LOGIN = "getStatusLogin";

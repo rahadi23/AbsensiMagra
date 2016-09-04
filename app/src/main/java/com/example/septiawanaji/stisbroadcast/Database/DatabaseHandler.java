@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int DATABSE_VERSION = 11;
+    private static final int DATABSE_VERSION = 2;
     private static final String DATABASE_NAME = "maba_db";
 
     private static final String TABEL_MABA = "tabel_maba";
@@ -130,6 +130,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.delete(TABEL_ABSENSI_MABA,null,null);
     }
 
+    public void deleteAbsensiHariIni(){
+        SQLiteDatabase db= this.getReadableDatabase();
+        db.delete(TABEL_ABSENSI_MABA,null,null);
+    }
+
     public String cekRowSizeMaba(){
         String kosong="";
         SQLiteDatabase db = this.getReadableDatabase();
@@ -169,9 +174,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return jamKedatangan;
     }
 
-    public String selectStatusUpload(String no){
+    public String selectStatusUpload(String no,String tanggal){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c  = db.rawQuery("SELECT " + STATUS_UPLOAD+ " FROM " + TABEL_ABSENSI_MABA + " WHERE " + NO + "='" + no+"'", null);
+        Cursor c  = db.rawQuery("SELECT " + STATUS_UPLOAD+ " FROM " + TABEL_ABSENSI_MABA + " WHERE " + NO + "='" + no+"' AND "+TANGGAL +"='"+tanggal+"'", null);
 
         String jamKedatangan="";
         if(c!=null & c.moveToFirst()){

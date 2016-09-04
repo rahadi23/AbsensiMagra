@@ -73,8 +73,8 @@ public class AdapterDaftarMaba extends ArrayAdapter {
 
 
         noMaba.setText(resultp.getNomorPendaftaran());
-        Log.d("Status Adapter "+resultp.getNomorPendaftaran(),db.selectStatusUpload(resultp.getNomorPendaftaran()));
-        if(!db.selectStatusUpload(resultp.getNomorPendaftaran()).equals("Sudah Upload")){
+        Log.d("Status Adapter "+resultp.getNomorPendaftaran(),db.selectStatusUpload(resultp.getNomorPendaftaran(),sdf.format(new Date())));
+        if(!db.selectStatusUpload(resultp.getNomorPendaftaran(),sdf.format(new Date())).equals("Sudah Upload")){
             tandaUpload.setImageResource(R.drawable.error);
         }else{
             tandaUpload.setImageResource(R.drawable.success);

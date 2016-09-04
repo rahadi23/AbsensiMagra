@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.septiawanaji.stisbroadcast.Objek.Absensi;
 import com.example.septiawanaji.stisbroadcast.Objek.Maba;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int DATABSE_VERSION = 11;
+    private static final int DATABSE_VERSION = 12;
     private static final String DATABASE_NAME = "maba_db";
 
     private static final String TABEL_MABA = "tabel_maba";
@@ -127,6 +128,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void deleteAllMaba(){
         SQLiteDatabase db = this.getReadableDatabase();
         db.delete(TABEL_MABA, null, null);
+        db.delete(TABEL_ABSENSI_MABA,null,null);
+    }
+
+    public void deleteAbsensiHariIni(){
+        SQLiteDatabase db = this.getReadableDatabase();
         db.delete(TABEL_ABSENSI_MABA,null,null);
     }
 

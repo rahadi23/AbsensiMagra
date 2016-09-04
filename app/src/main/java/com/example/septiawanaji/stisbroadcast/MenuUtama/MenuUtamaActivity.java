@@ -319,11 +319,8 @@ public class MenuUtamaActivity extends AppCompatActivity {
                 Intent intentAlarm = new Intent(MenuUtamaActivity.this, UploadOtomatis.class);
                 pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,intentAlarm,0);
                 //setiap jam 23.10 buka UploadOtomatis.java
-//                if(sm.getUploadSession()==null){
-//                    uploadAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, uploadTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-//                }
-                                //testing 20 detik sekali
-//                uploadAlarm.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), (10 * 1000), pendingIntent);
+//                                testing 20 detik sekali
+                uploadAlarm.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), (30 * 1000), pendingIntent);
 //
                 layUpload.setBackgroundResource(R.color.hijau);
                 upload.setImageResource(R.drawable.upload_activ_new);

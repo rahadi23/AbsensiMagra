@@ -20,6 +20,7 @@ import com.example.septiawanaji.stisbroadcast.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -58,7 +59,9 @@ public class DecoderActivity extends AppCompatActivity implements QRCodeReaderVi
         final Absensi absensi;
 
         status = (TextView)findViewById(R.id.statusScan);
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         db = new DatabaseHandler(getApplicationContext());
         hasilNamaPath = db.selectRow(text);
         Log.d("HasilNama",hasilNamaPath.toString());
